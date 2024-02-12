@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <form action="/login/" method="post">
+        {% csrf_token %}
+        {% if error_message %}
+        <p style="color: crimson">{{ error_message }}</p>
+        {% endif %}
+        {% if success_message %}
+        <p style="color: forestgreen">{{ success_message }}</p>
+        {% endif %}
+        <br>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" placeholder="Username" required>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" placeholder="Password" required>
+        <br>
+        <input type="submit" value="Login">
+    </form>
+    <form action="/register/" method="get">
+        {% csrf_token %}
+        <input type="submit" value="Register">
+    </form>
+
+</body>
+</html>

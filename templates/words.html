@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Words</title>
+</head>
+<body>
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+            <p style="color: crimson">{{ message }}</p>
+        {% elif message.tags == 'success' %}
+            <p style="color: forestgreen">{{ message }}</p>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<form action="/words/" method="post">
+    {% csrf_token %}
+    <label for="word">Word:</label>
+    <input type="text" name="word" id="word" placeholder="Word" required>
+    <label for="translation">Translation:</label>
+    <input type="text" name="translation" id="translation" placeholder="Translation" required>
+    <label for="transcription">Transcription:</label>
+    <input type="text" name="transcription" id="transcription" placeholder="Transcription" required>
+    <label for="transliteration">Transliteration:</label>
+    <input type="text" name="transliteration" id="transliteration" placeholder="Transliteration" required>
+    <input type="submit" value="Add">
+</form>
+<br>
+    <table>
+    <tbody>
+        {% for word in all_words %}
+        <tr>
+            <td>{{ word.word }}</td>
+            <td>{{ word.translation }}</td>
+            <td>{{ word.transcription }}</td>
+            <td>{{ word.transliteration }}</td>
+            <td>
+                <form action="{% url 'word_delete' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="word" id="word" value="{{ word.word }}">
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

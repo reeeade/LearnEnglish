@@ -20,6 +20,7 @@ from django.urls import path
 from words import views
 
 urlpatterns = [
-    path('', views.all_words, name='all_words'),
+    path('', views.Words.as_view(), name='all_words'),
     path('<int:word_id>/', views.word_detail, name='specific_word'),
+    path('delete/', views.word_delete, name='word_delete'),
 ]
