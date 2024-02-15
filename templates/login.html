@@ -14,11 +14,7 @@
         <p style="color: forestgreen">{{ success_message }}</p>
         {% endif %}
         <br>
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" placeholder="Username" required>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" placeholder="Password" required>
-        <br>
+        {{form_template}}
         <input type="submit" value="Login">
     </form>
     <form action="/register/" method="get">

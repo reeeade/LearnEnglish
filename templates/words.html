@@ -17,14 +17,7 @@
 
 <form action="/words/" method="post">
     {% csrf_token %}
-    <label for="word">Word:</label>
-    <input type="text" name="word" id="word" placeholder="Word" required>
-    <label for="translation">Translation:</label>
-    <input type="text" name="translation" id="translation" placeholder="Translation" required>
-    <label for="transcription">Transcription:</label>
-    <input type="text" name="transcription" id="transcription" placeholder="Transcription" required>
-    <label for="transliteration">Transliteration:</label>
-    <input type="text" name="transliteration" id="transliteration" placeholder="Transliteration" required>
+    {{ form_template }}
     <input type="submit" value="Add">
 </form>
 <br>

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 
+from words.forms import PartialArticleForm
 from words.models import UserDict
 
 
@@ -16,25 +17,23 @@ class Words(View):
             return render(request, 'login.html', {'error_message': 'You must be logged in to access this page.'})
         user = User.objects.get(username=request.user.username)
         all_words = UserDict.objects.filter(user=user)
-        return render(request, 'words.html', {'all_words': all_words})
+        form_template = PartialArticleForm()
+        return render(request, 'words.html', {'all_words': all_words, 'form_template': form_template})
 
     @staticmethod
     def post(request):
         if not request.user.is_authenticated:
             return render(request, 'login.html', {'error_message': 'You must be logged in to access this page.'})
-        word = request.POST.get('word')
-        translation = request.POST.get('translation')
-        transcription = request.POST.get('transcription')
-        transliteration = request.POST.get('transliteration')
         user = User.objects.get(username=request.user.username)
+        new_form = UserDict(user=user)
+        word_form = PartialArticleForm(request.POST, instance=new_form)
+        word = word_form.cleaned_data.get('word')
         if UserDict.objects.filter(word=word, user=user).exists():
-            all_words = UserDict.objects.filter(user=user)
             messages.error(request, 'Word already exists.')
             return redirect('all_words')
-        db_word = UserDict(word=word, user=user, translation=translation,
-                           transcription=transcription, transliteration=transliteration)
-        db_word.save()
-        all_words = UserDict.objects.filter(user=user)
+
+        if word_form.is_valid():
+            word_form.save()
         messages.success(request, 'Word added successfully.')
         return redirect('all_words')
 
