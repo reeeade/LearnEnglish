@@ -17,6 +17,8 @@ def all_lessons_handler(request):
 
 class LessonDetails(View):
     def get(self, request, lesson_id):
+        if not request.user.is_authenticated:
+            return render(request, 'login.html', {'error_message': 'You must be logged in to access this page.'})
         lesson = Lesson.objects.get(pk=lesson_id)
         questions = Question.objects.filter(lesson=lesson).all()
         adjusted_questions = []
@@ -30,6 +32,8 @@ class LessonDetails(View):
         return render(request, 'lesson.html', lesson_content)
 
     def post(self, request, lesson_id):
+        if not request.user.is_authenticated:
+            return render(request, 'login.html', {'error_message': 'You must be logged in to access this page.'})
         lesson = Lesson.objects.get(pk=lesson_id)
         questions = Question.objects.filter(lesson=lesson)
         results = {}

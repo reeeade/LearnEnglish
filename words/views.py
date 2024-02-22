@@ -41,6 +41,8 @@ class Words(View):
 
 
 def word_detail(request, word_id):
+    if not request.user.is_authenticated:
+        return render(request, 'login.html', {'error_message': 'You must be logged in to access this page.'})
     user = User.objects.get(username=request.user.username)
     message = ''
     if request.method == 'POST':
