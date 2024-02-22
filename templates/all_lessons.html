@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Lessons</title>
+</head>
+<body>
+{% for lesson in all_lessons %}
+    <a href="/lesson/{{lesson.id}}">{{lesson.title}}</a>
+    <br>    
+{% endfor %}
+</body>
+</html>

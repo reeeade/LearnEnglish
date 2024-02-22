@@ -21,5 +21,5 @@ from lessons import views
 
 urlpatterns = [
     path('', views.all_lessons_handler, name='all_lessons'),
-    path('<lesson_id>/', views.lesson_details_handler, name='lesson_details'),
+    path('<lesson_id>/', views.LessonDetails.as_view(), name='lesson_details'),
 ]

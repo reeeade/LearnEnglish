@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Word</title>
+</head>
+<body>
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+            <p style="color: crimson">{{ message }}</p>
+        {% elif message.tags == 'success' %}
+            <p style="color: forestgreen">{{ message }}</p>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+<p>{{ word.word }}</p>
+<form method="post" action="/words/{{ random_id }}/">
+    {% csrf_token %}
+    <input type="hidden" name="word_id" value="{{word.id}}">
+    <label>Translate:
+        <input type="text" name="translate" id="translate">
+    </label>
+    <input type="submit" value="Check">
+</form>
+</body>
+</html>

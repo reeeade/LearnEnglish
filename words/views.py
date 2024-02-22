@@ -1,3 +1,5 @@
+import random
+
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -27,7 +29,7 @@ class Words(View):
         user = User.objects.get(username=request.user.username)
         new_form = UserDict(user=user)
         word_form = PartialArticleForm(request.POST, instance=new_form)
-        word = word_form.cleaned_data.get('word')
+        word = request.POST.get('word')
         if UserDict.objects.filter(word=word, user=user).exists():
             messages.error(request, 'Word already exists.')
             return redirect('all_words')
@@ -39,7 +41,27 @@ class Words(View):
 
 
 def word_detail(request, word_id):
-    return HttpResponse(f"Word {word_id}")
+    user = User.objects.get(username=request.user.username)
+    message = ''
+    if request.method == 'POST':
+        test_word_id = request.POST.get('word_id')
+        test_translation = request.POST.get('translate')
+
+        test_word_in_db = UserDict.objects.get(pk=test_word_id, user=user)
+        if test_word_in_db.translation == test_translation:
+            messages.success(request,
+                             f'You are correct. Answer for "{test_word_in_db.word}" is "{test_translation}"')
+        else:
+            messages.error(request,
+                           f'You are incorrect. Answer for "{test_word_in_db.word}" is not "{test_translation}". '
+                           f'Should be "{test_word_in_db.translation}"')
+    all_user_words = UserDict.objects.filter(user=user).all()
+    random_word = random.choice(all_user_words)
+    random_id = random_word.pk
+
+    current_word = UserDict.objects.get(pk=word_id)
+    return render(request, 'word.html', {'word': current_word, 'random_id': random_id,
+                                         'message': message})
 
 
 def word_delete(request):

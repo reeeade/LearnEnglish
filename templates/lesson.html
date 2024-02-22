@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson</title>
+</head>
+<body>
+<p>Lesson {{ lesson.title }}</p>
+<p>{{ lesson.body }}</p>
+<form method="post" action="/lesson/{{ lesson.id }}/">
+    {% csrf_token %}
+    {% for question in questions %}
+        <p>{{ question.question }}</p>
+        <label for="question_{{ question.id }}">
+        <select id="question_{{ question.id }}" name="question_{{ question.id }}">
+            {% for answer in question.answers %}
+                <option value="{{ answer }}">{{ answer }}</option>
+            {% endfor %}
+        </select>
+            <br>
+        </label>
+    {% endfor %}
+    <input type="submit" value="Check">
+</form>
+</body>
+</html>

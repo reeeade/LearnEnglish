@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Answers</title>
+</head>
+<body>
+{% for result in results %}
+{% if result.is_correct == True %}
+    {{ result.text }} <span style="color:forestgreen">{{ result.is_correct }}</span>
+{% else %}
+    {{ result.text }} <span style="color:crimson">{{ result.is_correct }}</span>
+    {% endif %}
+    <br>
+{% endfor %}
+</body>
+</html>
