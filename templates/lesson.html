@@ -5,8 +5,9 @@
     <title>Lesson</title>
 </head>
 <body>
-<p>Lesson {{ lesson.title }}</p>
-<p>{{ lesson.body }}</p>
+<h2>Lesson {{ lesson.title }}</h2>
+<a href="/lesson/">Back to all lessons</a>
+<h3>{{ lesson.body }}</h3>
 <form method="post" action="/lesson/{{ lesson.id }}/">
     {% csrf_token %}
     {% for question in questions %}

@@ -5,11 +5,14 @@
     <title>All Lessons</title>
 </head>
 <body>
+<h1>All lessons</h1>
+<a href="/words">To words</a>
+<a href="/user">Profile</a>
+<br>
 {% for lesson in all_lessons %}
     <a href="/lesson/{{lesson.id}}">{{lesson.title}}</a>
     <br>    
 {% endfor %}
-<a href="/words">To words</a>
-<a href="/user">Profile</a>
+
 </body>
 </html>
