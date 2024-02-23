@@ -60,6 +60,7 @@ def login_handler(request):
         return render(request, 'login.html', {'form_template': form_template})
 
 
+@login_required(login_url='/login')
 def logout_handler(request):
     logout(request)
     return redirect('/login')
@@ -86,12 +87,18 @@ def user_profile_handler(request):
             user.save()
     user = User.objects.get(username=request.user.username)
 
-    user_scores = Score.objects.filter(user=user)
+    user_scores = Score.objects.filter(user=user).first()
     if not user_scores:
         user_scores = Score(user=user, score=0)
         user_scores.save()
     return render(request, 'user_profile.html', {'user': user, 'user_scores': user_scores})
 
 
+@login_required(login_url='/login')
 def user_delete_handler(request):
     return HttpResponse('Hello, world. You are at the user delete page.')
+
+
+def leaderboard_handler(request):
+    scores = Score.objects.all().order_by('-score')[:10]
+    return render(request, 'leaderboard.html', {'scores': scores})

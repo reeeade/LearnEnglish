@@ -23,4 +23,5 @@ urlpatterns = [
     path('', views.Words.as_view(), name='all_words'),
     path('<int:word_id>/', views.word_detail, name='specific_word'),
     path('delete/', views.word_delete, name='word_delete'),
+    path('random/', views.random_word, name='random_word')
 ]

@@ -25,4 +25,5 @@ urlpatterns = [
     path('logout/', views.logout_handler, name='logout'),
     path('user/', views.user_profile_handler, name='user_profile'),
     path('user/delete', views.user_delete_handler, name='user_delete'),
+    path('leaderboard/', views.leaderboard_handler, name='leaderboard'),
 ]

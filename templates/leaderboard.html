@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaderboard</title>
+</head>
+<body>
+<H1>Top 10 users</H1>
+<a href="/user/">To profile</a>
+<br>
+<table>
+    <tr>
+        <th>Rank</th>
+        <th>Username</th>
+        <th>Score</th>
+    </tr>
+    {% for score_item in scores %}
+    <tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ score_item.user.first_name }}</td>
+    <td>{{ score_item.score }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

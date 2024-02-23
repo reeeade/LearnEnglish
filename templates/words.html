@@ -14,14 +14,15 @@
         {% endif %}
     {% endfor %}
 {% endif %}
-
+<a href="/lesson">To lessons</a>
+<a href="/user">Profile</a>
 <form action="/words/" method="post">
     {% csrf_token %}
     {{ form_template }}
     <input type="submit" value="Add">
 </form>
 <br>
-<a href="/lesson">To lessons</a>
+<a href="/words/random/">Start learning words</a>
 <br>
     <table>
     <tbody>
