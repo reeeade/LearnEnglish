@@ -85,9 +85,10 @@ def user_profile_handler(request):
             user.first_name = first_name
             user.last_name = last_name
             user.save()
-    user = User.objects.get(username=request.user.username)
 
+    user = User.objects.get(username=request.user.username)
     user_scores = Score.objects.filter(user=user).first()
+
     if not user_scores:
         user_scores = Score(user=user, score=0)
         user_scores.save()
