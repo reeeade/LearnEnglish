@@ -40,19 +40,19 @@ class Words(View):
         return redirect('all_words')
 
 
-def get_next_random_id(username):
+def get_next_random_id(username, exclude_id=None):
     user = User.objects.get(username=username)
     all_user_words = UserDict.objects.filter(user=user).all()
+    if exclude_id is not None:
+        all_user_words = all_user_words.exclude(pk=exclude_id)
     rand_word = random.choice(all_user_words)
     random_id = rand_word.pk
     return random_id
 
 
-def word_detail(request, word_id):
+def word_checker(request, word_id):
     if not request.user.is_authenticated:
         return render(request, 'login.html', {'error_message': 'You must be logged in to access this page.'})
-
-    message = ''
     if request.method == 'POST':
         test_word_id = request.POST.get('word_id')
         test_translation = request.POST.get('translate')
@@ -67,10 +67,9 @@ def word_detail(request, word_id):
                            f'Should be "{test_word_in_db.translation}"')
             update_score(request.user.username, -1)
 
-    next_random_id = get_next_random_id(request.user.username)
+    next_random_id = get_next_random_id(request.user.username, exclude_id=word_id)
     current_word = UserDict.objects.get(pk=word_id)
-    return render(request, 'word.html', {'word': current_word, 'random_id': next_random_id,
-                                         'message': message})
+    return render(request, 'word.html', {'word': current_word, 'random_id': next_random_id})
 
 
 def word_delete(request):
