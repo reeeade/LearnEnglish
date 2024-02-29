@@ -21,7 +21,7 @@ from words import views
 
 urlpatterns = [
     path('', views.Words.as_view(), name='all_words'),
-    path('<int:word_id>/', views.word_detail, name='specific_word'),
+    path('<int:word_id>/', views.word_checker, name='word_checker'),
     path('delete/', views.word_delete, name='word_delete'),
     path('random/', views.random_word, name='random_word')
 ]
